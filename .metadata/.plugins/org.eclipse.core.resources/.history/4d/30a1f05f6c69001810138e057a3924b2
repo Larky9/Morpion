@@ -1,0 +1,103 @@
+
+import javax.swing.JOptionPane;
+import edu.princeton.cs.introcs.StdDraw;
+public class Morpion {
+	
+	static double t=1000;
+	static double a=t/3;
+	static int tour=1;
+	public static int [] getCase() {
+		int[] coFin = {0,0};
+	while (true){
+		
+        if (StdDraw.mousePressed()){
+        	int[] coEnt = { 1+(int)(StdDraw.mouseY()/a),1+(int)(StdDraw.mouseX()/a)};
+        	 coFin =coEnt ;
+            return coFin;
+
+        }
+        
+        }
+	}
+	public static void Play(Player player,Gridn grid) {
+		int[] g = {getCase()[0]-1,getCase()[1]-1};
+		 StdDraw.pause(100);
+		while( grid.Fill(g[0],g[1])) {
+			 StdDraw.pause(100);
+
+			System.out.println("Déja Rempli réesaye !");
+			g[0] = getCase()[0]-1;
+			g[1] =getCase()[1]-1;
+			grid.Display();
+			 StdDraw.pause(100);
+			
+		}
+		
+		grid.Insert(g[0],g[1],player);
+	}
+	public static void BG() {
+		
+        
+		StdDraw.enableDoubleBuffering();
+		
+	 	for (double u = 0.0; true; u += 0.7) {
+ 	       double w = 50*u;
+ 	      
+ 	    StdDraw.clear();
+     StdDraw.picture((t/2), (t/2), "Untitled-1.png",w,w);
+     StdDraw.show();
+	      
+	       if (w>t) {break;}
+	       
+	 	}
+	}
+	   public static void main(String[] args) {  // program entry point
+		  
+		   StdDraw.setXscale(0,t);
+	        StdDraw.setYscale(t,0);
+          BG();
+       
+           String name1;
+           name1 = JOptionPane.showInputDialog("joueur1");
+           String name2;
+           name2 = JOptionPane.showInputDialog("joueur2");
+
+	   
+	   Player player1 = new Player(1,name1);
+	  
+	   Player player2 = new Player(2,name2);
+	   
+	
+	   System.out.println(player1.getName());
+	   System.out.println(player2.getName());
+	   
+	   int [][] grid2 = new int [3][3];
+	   Gridn grid1= new Gridn(grid2);
+	   grid1.setGridn(grid2, 3, 3);
+	   System.out.print(grid1.Display());
+	   
+	   String[] str=null;
+	   
+	   while (grid1.Verify()!=-1) {
+		   tour++;
+		   if(tour%2==0){
+			  
+			   System.out.print(player1.getName() +" C'est ton tour ! ");
+		   Play(player1,grid1);
+		   
+		   System.out.print(grid1.Display());
+		   grid1.disG();
+		   if( grid1.Verify()==1 ) {System.out.print(player1.getName() +" à gagner ");main(str);}
+		}else{
+			System.out.print(player2.getName() +" C'est ton tour ! ");
+			Play(player2,grid1);
+			System.out.print(grid1.Display());
+			grid1.disG();
+			if( grid1.Verify()==2 ) {System.out.print(player1.getName() +" à gagner ");main(str);}
+		}
+		
+	   }
+	  
+	  
+	}
+	}
